@@ -7,6 +7,7 @@ const AddTaskForm = (props) => {
         addTask,
         newTaskTitle,
         setNewTaskTitle,
+        newTaskInputRef
     } = props;
 
 
@@ -22,6 +23,7 @@ const AddTaskForm = (props) => {
                 className="todo__field"
                 label="New task"
                 id="new-task"
+                ref={newTaskInputRef}
                 value={newTaskTitle}
                 onInput={(event) => setNewTaskTitle(event.target.value)}
             />
