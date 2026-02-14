@@ -1,10 +1,10 @@
+import { useState, useEffect, useRef } from 'react';
+
 import AddTaskForm from './AddTaskForm';
 import SearchTaskForm from './SearchTaskForm';
 import TodoInfo from './TodoInfo';
 import TodoList from './TodoList';
 import Button from './Button';
-
-import { useState, useEffect, useRef } from 'react';
 
 const Todo = () => {
 
@@ -29,7 +29,7 @@ const Todo = () => {
     const newTaskInputRef = useRef(null)
     
     const firstIncompleteTaskRef = useRef(null)
-    const firstInCompleteTaskId = tasks.find(({ isDone }) => !isDone)?.id;
+    const firstInсompleteTaskId = tasks.find(({ isDone }) => !isDone)?.id;
 
     const deleteAllTasks = () => {
         const isConfirmed = confirm('Are you sure you want to delete all tasks?');
@@ -71,7 +71,7 @@ const Todo = () => {
         
         if (newTaskTitle.trim().length > 0) {
             const newTask = {
-                id: crypto?.randomUUID() ?? Date.now().toString,
+                id: crypto?.randomUUID() ?? Date.now().toString(),
                 title: newTaskTitle,
                 isDone: false,
             }
@@ -131,7 +131,7 @@ const Todo = () => {
                 tasks={tasks}
                 filteredTasks={filteredTasks}
                 firstIncompleteTaskRef={firstIncompleteTaskRef}
-                firstInCompleteTaskId={firstInCompleteTaskId}
+                firstInсompleteTaskId={firstInсompleteTaskId}
                 onDeleteTaskButtonClick={deleteTask}
                 onTaskCompleteChange={toggleTaskCompleted}
             />
