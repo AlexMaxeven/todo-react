@@ -1,7 +1,10 @@
 import Todo from './components/Todo';
 
 const App = () => {
-    return (
+    
+  console.log('App rendered');
+  
+  return (
         <>
 
           <Todo/>
