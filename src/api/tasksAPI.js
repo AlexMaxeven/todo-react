@@ -1,9 +1,9 @@
 const URL = 'http://localhost:3001/tasks';
 const STORAGE_KEY = 'todo-react-tasks';
 
-const headers = {
-    'Content-Type': 'application/json',
-};
+const headers = { 'Content-Type': 'application/json' };
+
+let useLocalOnly = false;
 
 const getLocalTasks = () => {
     try {
@@ -22,75 +22,61 @@ const setLocalTasks = (tasks) => {
 
 const tasksAPI = {
     getAll: async () => {
+        if (useLocalOnly) return getLocalTasks();
         try {
             const response = await fetch(URL);
-            if (!response.ok) throw new Error('API unavailable');
+            if (!response.ok) throw new Error();
             return response.json();
         } catch {
+            useLocalOnly = true;
             return getLocalTasks();
         }
     },
     add: async (task) => {
-        try {
-            const response = await fetch(URL, {
-                method: 'POST',
-                headers,
-                body: JSON.stringify(task),
-            });
-            if (!response.ok) throw new Error('API unavailable');
-            return response.json();
-        } catch {
-            const newTask = {
-                ...task,
-                id: `local_${Date.now()}`,
-            };
-            const tasks = getLocalTasks();
-            tasks.push(newTask);
+        if (useLocalOnly) {
+            const newTask = { ...task, id: `local_${Date.now()}` };
+            const tasks = [...getLocalTasks(), newTask];
             setLocalTasks(tasks);
             return newTask;
         }
+        const response = await fetch(URL, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify(task),
+        });
+        return response.json();
     },
     delete: async (id) => {
-        try {
-            const response = await fetch(`${URL}/${id}`, {
-                method: 'DELETE',
-            });
-            if (!response.ok) throw new Error('API unavailable');
-            return response;
-        } catch {
+        if (useLocalOnly) {
             const tasks = getLocalTasks().filter((t) => t.id !== id);
             setLocalTasks(tasks);
             return { ok: true };
         }
+        return fetch(`${URL}/${id}`, { method: 'DELETE' });
     },
     deleteAll: async (tasks) => {
-        try {
-            await Promise.all(
-                tasks.map(({ id }) =>
-                    fetch(`${URL}/${id}`, { method: 'DELETE' })
-                )
-            );
-        } catch {
+        if (useLocalOnly) {
             setLocalTasks([]);
+            return;
         }
+        await Promise.all(
+            tasks.map(({ id }) => fetch(`${URL}/${id}`, { method: 'DELETE' }))
+        );
     },
     toggleComplete: async (id, isDone) => {
-        try {
-            const response = await fetch(`${URL}/${id}`, {
-                method: 'PATCH',
-                headers,
-                body: JSON.stringify({ isDone }),
-            });
-            if (!response.ok) throw new Error('API unavailable');
-            return response;
-        } catch {
+        if (useLocalOnly) {
             const tasks = getLocalTasks().map((t) =>
                 t.id === id ? { ...t, isDone } : t
             );
             setLocalTasks(tasks);
             return { ok: true };
         }
+        return fetch(`${URL}/${id}`, {
+            method: 'PATCH',
+            headers,
+            body: JSON.stringify({ isDone }),
+        });
     },
-}
+};
 
 export default tasksAPI;
