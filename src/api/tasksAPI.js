@@ -32,6 +32,13 @@ const tasksAPI = {
             return getLocalTasks();
         }
     },
+
+    getById: async (id) => {
+        return fetch(`${URL}/${id}`).then(response => response.json());
+
+    },
+
+    
     add: async (task) => {
         if (useLocalOnly) {
             const newTask = { ...task, id: `local_${Date.now()}` };
