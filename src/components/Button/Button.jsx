@@ -1,3 +1,5 @@
+import styles from './Button.module.css'
+
 const Button = (props) => {
 
     const {
@@ -10,7 +12,7 @@ const Button = (props) => {
 
     return (
         <button 
-            className={`button ${className}`} 
+            className={`${styles.button} ${className}`} 
             type={type}
             disabled={isDisabled}
             onClick={onClick}
