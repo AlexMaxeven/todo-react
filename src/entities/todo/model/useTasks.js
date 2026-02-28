@@ -94,7 +94,9 @@ const useTasks = () => {
             dispatch({type: 'ADD', task: addedTask})
             callbackAfterAdding();
             setSearchQuery('');
-            newTaskInputRef.current.focus();
+            if (window.matchMedia('(hover: hover)').matches) {
+                newTaskInputRef.current?.focus();
+            }
 
             // 1) Показуємо елемент у початковому стані (opacity 0, зміщення)
             setAppearingTaskId(addedTask.id)
@@ -114,8 +116,9 @@ const useTasks = () => {
     }}, [])
 
     useEffect(() => {
-        newTaskInputRef.current.focus();
-
+        if (window.matchMedia('(hover: hover)').matches) {
+            newTaskInputRef.current?.focus();
+        }
         tasksAPI.getAll()
         .then((serverTasks) => dispatch({type: 'SET_All', tasks: serverTasks}))
     }, []);

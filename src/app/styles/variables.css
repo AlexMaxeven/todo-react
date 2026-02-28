@@ -1,6 +1,7 @@
 :root {
   --color-white: #FFFFFF;
   --color-black: #000000;
+  --color-bg-page: #1a1a1a; /* чорний фон сторінки */
 
   --color-dark-1: #1E1E1E;
   --color-dark-2: #2C2C2C;

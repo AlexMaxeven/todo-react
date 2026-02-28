@@ -80,7 +80,7 @@
     translate: -50% -50%;
     width: 16px;
     height: 16px;
-    background: url('../../assets/icons/icon-check_white.svg') center/contain no-repeat;
+    background: url('../../../../shared/assets/icons/icon-check_white.svg') center/contain no-repeat;
   }
 }
 
@@ -103,9 +103,12 @@
   border: none;
   border-radius: inherit;
 
-  &:hover {
-    color: var(--color-white);
-    background-color: var(--color-dark-1);
+  /* Hover тільки там, де є справжній hover (не тач) — щоб на телефоні не лишався підсвічений наступний елемент */
+  @media (hover: hover) {
+    &:hover {
+      color: var(--color-white);
+      background-color: var(--color-dark-1);
+    }
   }
 
   &:active {

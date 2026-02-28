@@ -17,7 +17,7 @@ const Field = (props) => {
         <div className={`${styles.field} ${className}`}>
           
           <label
-            className="field__label"
+            className={styles.label}
             htmlFor={id}
           >
             {label}

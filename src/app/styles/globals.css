@@ -1,11 +1,18 @@
+/* Фон на html, щоб зафарбовувалась уся область прокрутки */
+html {
+  min-height: 100%;
+  background-color: var(--color-bg-page);
+}
+
 body {
   display: flex;
   justify-content: center;
   align-items: start;
   min-height: 100vh;
+  min-height: 100dvh;
   padding: 100px 30px;
   font-family: 'Inter', sans-serif;
-  background-color: var(--color-gray-1);
+  background-color: var(--color-bg-page);
   color: var(--color-black);
 }
 
