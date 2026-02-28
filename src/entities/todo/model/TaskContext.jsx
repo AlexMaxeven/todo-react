@@ -13,14 +13,15 @@ export const TasksProvider = (props) => {
         deleteTask,
         deleteAllTasks,
         toggleTaskCompleted,
-        
         searchQuery,
         setSearchQuery,
         newTaskInputRef,
         addTask,
         disappearingTaskId,
         appearingTaskId,
-        appearingAnimatingId
+        appearingAnimatingId,
+        isExitingToTask,
+        startExitToTaskPage,
     } = useTasks();
 
     const {
@@ -34,7 +35,6 @@ export const TasksProvider = (props) => {
         deleteTask,
         deleteAllTasks,
         toggleTaskCompleted,
-        
         searchQuery,
         setSearchQuery,
         newTaskInputRef,
@@ -44,13 +44,14 @@ export const TasksProvider = (props) => {
         appearingAnimatingId,
         firstIncompleteTaskRef,
         firstInсompleteTaskId,
+        isExitingToTask,
+        startExitToTaskPage,
     }), [
         tasks,
         filteredTasks,
         deleteTask,
         deleteAllTasks,
         toggleTaskCompleted,
-        
         searchQuery,
         setSearchQuery,
         newTaskInputRef,
@@ -60,6 +61,8 @@ export const TasksProvider = (props) => {
         appearingAnimatingId,
         firstIncompleteTaskRef,
         firstInсompleteTaskId,
+        isExitingToTask,
+        startExitToTaskPage,
     ])
 
     return (

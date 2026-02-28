@@ -22,6 +22,7 @@ const TodoItem = (props) => {
       appearingTaskId,
       appearingAnimatingId,
       searchQuery,
+      startExitToTaskPage,
     } = useContext(TaskContext);
 
     const highlightedTitle = highlightCaseInsensitive(title, searchQuery);
@@ -55,6 +56,7 @@ const TodoItem = (props) => {
           <RouterLink
             to={`/tasks/${id}`}
             aria-label="Сторінка задачі"
+            onBeforeNavigate={startExitToTaskPage}
             onClick={(e) => e.stopPropagation()}
           >
             <span dangerouslySetInnerHTML={{ __html: highlightedTitle }} />

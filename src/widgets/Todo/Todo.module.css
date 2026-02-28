@@ -7,17 +7,7 @@
   }
 }
 
-@keyframes borderGradient {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
 .todo {
-  position: relative;
   display: flex;
   flex-direction: column;
   row-gap: 24px;
@@ -27,42 +17,14 @@
   min-height: 429px;
   padding: 24px;
   background-color: var(--color-white);
-  border: none;
   border-radius: var(--border-radius);
-  box-shadow:
-    var(--box-shadow),
-    0 8px 24px rgba(0, 0, 0, 0.12),
-    0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--box-shadow);
   animation: pageAppear calc(var(--transition-duration) * 2) ease-out both;
+  transition: opacity 0.25s ease;
 }
 
-/* Рамка 4px з градієнтом — ::before за маскою показується тільки по краях */
-.todo::before {
-  content: '';
-  position: absolute;
-  inset: -4px;
-  z-index: -1;
-  border-radius: calc(var(--border-radius) + 4px);
-  background: linear-gradient(
-    120deg,
-    var(--color-gray-3),
-    var(--color-dark-2),
-    var(--color-gray-4),
-    var(--color-dark-2),
-    var(--color-gray-3)
-  );
-  background-size: 300% 300%;
-  animation: borderGradient 4s ease infinite;
-  mask-image: linear-gradient(white, white), linear-gradient(white, white);
-  mask-size: 100% 100%, calc(100% - 8px) calc(100% - 8px);
-  mask-position: 0 0, center;
-  mask-repeat: no-repeat;
-  mask-composite: subtract;
-  -webkit-mask-image: linear-gradient(white, white), linear-gradient(white, white);
-  -webkit-mask-size: 100% 100%, calc(100% - 8px) calc(100% - 8px);
-  -webkit-mask-position: 0 0, center;
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-composite: xor;
+.todo.isExiting {
+  opacity: 0;
 }
 
 .title {

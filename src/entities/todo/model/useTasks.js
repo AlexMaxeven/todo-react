@@ -47,8 +47,20 @@ const useTasks = () => {
     const [disappearingTaskId, setDisappearingTaskId] = useState(null)
     const [appearingTaskId, setAppearingTaskId] = useState(null)
     const [appearingAnimatingId, setAppearingAnimatingId] = useState(null)
-    
+    const [isExitingToTask, setIsExitingToTask] = useState(false)
+
     const newTaskInputRef = useRef(null)
+
+    /** Повертає Promise: плавно зменшує opacity головного блоку, потім resolve (для переходу на сторінку задачі) */
+    const startExitToTaskPage = useCallback(() => {
+        return new Promise((resolve) => {
+            setIsExitingToTask(true)
+            setTimeout(() => {
+                resolve()
+                setIsExitingToTask(false)
+            }, 250)
+        })
+    }, [])
 
     const deleteAllTasks = useCallback(() => {
         const isConfirmed = confirm('Are you sure you want to delete all tasks?');
@@ -145,7 +157,9 @@ const useTasks = () => {
         addTask,
         disappearingTaskId,
         appearingTaskId,
-        appearingAnimatingId
+        appearingAnimatingId,
+        isExitingToTask,
+        startExitToTaskPage,
     }
 }
 

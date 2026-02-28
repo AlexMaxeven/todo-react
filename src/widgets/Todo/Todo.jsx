@@ -10,12 +10,10 @@ import { TaskContext } from '@/entities/todo';
 import styles from './Todo.module.css'
 
 const Todo = () => {
-
-    const {firstIncompleteTaskRef} = useContext(TaskContext);
+    const { firstIncompleteTaskRef, isExitingToTask } = useContext(TaskContext);
 
     return (
-        
-        <div className={styles.todo}>
+        <div className={`${styles.todo} ${isExitingToTask ? styles.isExiting : ''}`}>
             <h1 className={styles.title}>To Do List</h1>
             
             <AddTaskForm styles={styles}
