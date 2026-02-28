@@ -20,6 +20,7 @@ const TodoItem = (props) => {
       toggleTaskCompleted,
       disappearingTaskId,
       appearingTaskId,
+      appearingAnimatingId,
       searchQuery,
     } = useContext(TaskContext);
 
@@ -30,7 +31,8 @@ const TodoItem = (props) => {
           ${styles.todoItem} 
           ${className} 
           ${disappearingTaskId === id ? styles.isDisappearing : ''}
-          ${appearingTaskId === id ? styles.isAppearing : ''}
+          ${appearingTaskId === id ? styles.isAppearingInitial : ''}
+          ${appearingAnimatingId === id ? styles.isAppearing : ''}
           `
          } ref={id === firstInсompleteTaskId ? firstIncompleteTaskRef : null}>
           <input
@@ -50,7 +52,7 @@ const TodoItem = (props) => {
             {title}
           </label>
 
-          <RouterLink to={`/tasks/${id}`} aria-label='Task Detail Page'>
+          <RouterLink to={`tasks/${id}`} aria-label='Task Detail Page'>
             <span dangerouslySetInnerHTML={{__html: highlightedTitle}}></span>
           </RouterLink>
           

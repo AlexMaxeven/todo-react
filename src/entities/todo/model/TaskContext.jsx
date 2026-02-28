@@ -13,14 +13,14 @@ export const TasksProvider = (props) => {
         deleteTask,
         deleteAllTasks,
         toggleTaskCompleted,
-        newTaskTitle,
-        setNewTaskTitle,
+        
         searchQuery,
         setSearchQuery,
         newTaskInputRef,
         addTask,
         disappearingTaskId,
-        appearingTaskId
+        appearingTaskId,
+        appearingAnimatingId
     } = useTasks();
 
     const {
@@ -34,14 +34,14 @@ export const TasksProvider = (props) => {
         deleteTask,
         deleteAllTasks,
         toggleTaskCompleted,
-        newTaskTitle,
-        setNewTaskTitle,
+        
         searchQuery,
         setSearchQuery,
         newTaskInputRef,
         addTask,
         disappearingTaskId,
         appearingTaskId,
+        appearingAnimatingId,
         firstIncompleteTaskRef,
         firstInсompleteTaskId,
     }), [
@@ -50,14 +50,14 @@ export const TasksProvider = (props) => {
         deleteTask,
         deleteAllTasks,
         toggleTaskCompleted,
-        newTaskTitle,
-        setNewTaskTitle,
+        
         searchQuery,
         setSearchQuery,
         newTaskInputRef,
         addTask,
         disappearingTaskId,
         appearingTaskId,
+        appearingAnimatingId,
         firstIncompleteTaskRef,
         firstInсompleteTaskId,
     ])

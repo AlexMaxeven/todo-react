@@ -6,11 +6,11 @@ import { useContext, useState } from 'react';
 const AddTaskForm = (props) => {
 
     const {styles} = props;
+
+    const [newTaskTitle, setNewTaskTitle] = useState('');
     
     const {
         addTask,
-        newTaskTitle,
-        setNewTaskTitle,
         newTaskInputRef
     } = useContext(TaskContext);
 
@@ -23,7 +23,10 @@ const AddTaskForm = (props) => {
         event.preventDefault();
 
         if (!isNewTaskTitleEmpty) {
-            addTask(clearNewTaskTitle);
+            addTask(
+                clearNewTaskTitle,
+                () => setNewTaskTitle('')
+            );
         }
     } 
 

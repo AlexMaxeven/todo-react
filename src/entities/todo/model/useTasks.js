@@ -41,13 +41,12 @@ const useTasks = () => {
     // } = useTaskLocalStorage();
 
     const [tasks, dispatch] = useReducer(tasksReducer, [])
-
-    const [newTaskTitle, setNewTaskTitle] = useState('');
     
     const [searchQuery, setSearchQuery] = useState('');
 
     const [disappearingTaskId, setDisappearingTaskId] = useState(null)
     const [appearingTaskId, setAppearingTaskId] = useState(null)
+    const [appearingAnimatingId, setAppearingAnimatingId] = useState(null)
     
     const newTaskInputRef = useRef(null)
 
@@ -83,7 +82,7 @@ const useTasks = () => {
 
     }, [])
 
-    const addTask = useCallback((title) => {{
+    const addTask = useCallback((title, callbackAfterAdding) => {{
 
         const newTask = {
             title,
@@ -92,17 +91,23 @@ const useTasks = () => {
 
         tasksAPI.add(newTask)
         .then(addedTask => {
-            
             dispatch({type: 'ADD', task: addedTask})
-    
-            setNewTaskTitle('');
+            callbackAfterAdding();
             setSearchQuery('');
             newTaskInputRef.current.focus();
 
+            // 1) Показуємо елемент у початковому стані (opacity 0, зміщення)
             setAppearingTaskId(addedTask.id)
-            setTimeout(() => {
-                setAppearingTaskId(null)
-            }, 400)
+            // 2) Після малювання кадру — увімкнути transition до кінцевого стану
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    setAppearingAnimatingId(addedTask.id)
+                    setTimeout(() => {
+                        setAppearingTaskId(null)
+                        setAppearingAnimatingId(null)
+                    }, 400)
+                })
+            })
         })
 
     
@@ -131,14 +136,13 @@ const useTasks = () => {
         deleteAllTasks,
         toggleTaskCompleted,
 
-        newTaskTitle,
-        setNewTaskTitle,
         searchQuery,
         setSearchQuery,
         newTaskInputRef,
         addTask,
         disappearingTaskId,
-        appearingTaskId
+        appearingTaskId,
+        appearingAnimatingId
     }
 }
 
