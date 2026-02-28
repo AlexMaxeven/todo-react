@@ -24,14 +24,6 @@ const TaskPage = (props) => {
             });
     }, [taskId]);
 
-    const toggleDone = () => {
-        if (!task) return;
-        const nextDone = !task.isDone;
-        tasksAPI.toggleComplete(taskId, nextDone).then(() => {
-            setTask((prev) => ({ ...prev, isDone: nextDone }));
-        });
-    };
-
     if (isLoading) {
         return (
             <div className={styles.loading}>
@@ -61,13 +53,6 @@ const TaskPage = (props) => {
                 <span className={task.isDone ? styles.statusDone : styles.statusNotDone}>
                     {task.isDone ? 'Виконано' : 'Не виконано'}
                 </span>
-                <button
-                    type="button"
-                    className={styles.toggleDoneButton}
-                    onClick={toggleDone}
-                >
-                    {task.isDone ? 'Позначити не виконаним' : 'Позначити виконаним'}
-                </button>
             </div>
         </article>
     );

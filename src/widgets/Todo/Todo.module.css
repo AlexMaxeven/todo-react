@@ -22,6 +22,7 @@
   flex-direction: column;
   row-gap: 24px;
   width: 100%;
+  min-width: 404px;
   max-width: 404px;
   min-height: 429px;
   padding: 24px;

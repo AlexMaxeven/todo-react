@@ -25,6 +25,7 @@
 .page {
   position: relative;
   width: 100%;
+  min-width: 404px;
   max-width: 404px;
   min-height: 429px;
   padding: 24px;
@@ -100,29 +101,9 @@
 
 .statusRow {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   column-gap: 8px;
-  row-gap: 8px;
   margin-bottom: 8px;
-}
-
-.toggleDoneButton {
-  margin-left: auto;
-  padding: 6px 12px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--color-dark-2);
-  background-color: var(--color-gray-1);
-  border: var(--border);
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color var(--transition-duration), color var(--transition-duration);
-}
-
-.toggleDoneButton:hover {
-  background-color: var(--color-gray-2);
-  color: var(--color-black);
 }
 
 .statusLabel {
@@ -152,6 +133,7 @@
 .loading,
 .error {
   width: 100%;
+  min-width: 404px;
   max-width: 404px;
   min-height: 429px;
   padding: 24px;
