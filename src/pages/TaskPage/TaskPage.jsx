@@ -3,6 +3,13 @@ import tasksAPI from '@/shared/api/tasks';
 import RouterLink from '@/shared/components/RouterLink';
 import styles from './TaskPage.module.css';
 
+const blockStyle = {
+    textAlign: 'left',
+    minWidth: 404,
+    maxWidth: 404,
+    width: '100%',
+};
+
 const TaskPage = (props) => {
     const { params } = props;
     const taskId = params.id;
@@ -26,7 +33,7 @@ const TaskPage = (props) => {
 
     if (isLoading) {
         return (
-            <div className={styles.loading}>
+            <div className={styles.loading} style={blockStyle}>
                 <RouterLink to="/" className={styles.backLink}>Назад до списку</RouterLink>
                 <p>Завантаження...</p>
             </div>
@@ -35,7 +42,7 @@ const TaskPage = (props) => {
 
     if (hasError) {
         return (
-            <div className={styles.error}>
+            <div className={styles.error} style={blockStyle}>
                 <RouterLink to="/" className={styles.backLink}>Назад до списку</RouterLink>
                 <p>Задачу не знайдено</p>
             </div>
@@ -43,7 +50,7 @@ const TaskPage = (props) => {
     }
 
     return (
-        <article className={styles.page}>
+        <article className={styles.page} style={blockStyle}>
             <RouterLink to="/" className={styles.backLink}>
                 Назад до списку
             </RouterLink>

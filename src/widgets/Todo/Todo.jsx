@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 
 import AddTaskForm from '@/features/add-task';
 import SearchTaskForm from '@/features/search-task';
@@ -7,13 +7,29 @@ import { TodoList } from '@/entities/todo';
 import Button from '@/shared/components/Button';
 import { TaskContext } from '@/entities/todo';
 
-import styles from './Todo.module.css'
+import styles from './Todo.module.css';
 
 const Todo = () => {
     const { firstIncompleteTaskRef, isExitingToTask } = useContext(TaskContext);
+    const [isReady, setIsReady] = useState(false);
+
+    useEffect(() => {
+        let cancelled = false;
+        const id = requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                if (!cancelled) setIsReady(true);
+            });
+        });
+        return () => {
+            cancelled = true;
+            cancelAnimationFrame(id);
+        };
+    }, []);
 
     return (
-        <div className={`${styles.todo} ${isExitingToTask ? styles.isExiting : ''}`}>
+        <div
+            className={`${styles.todo} ${isExitingToTask ? styles.isExiting : ''} ${isReady ? styles.isReady : ''}`}
+        >
             <h1 className={styles.title}>To Do List</h1>
             
             <AddTaskForm styles={styles}
