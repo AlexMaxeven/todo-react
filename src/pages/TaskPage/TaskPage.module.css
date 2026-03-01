@@ -1,5 +1,6 @@
 /* Один контейнер для всіх станів — без стрибків розміру */
 .wrapper {
+  position: relative;
   width: 100%;
   min-width: 404px;
   max-width: 404px;
@@ -13,13 +14,30 @@
   color: var(--color-dark-2);
 }
 
-/* Плавна поява контенту задачі */
-.contentWrap {
-  opacity: 0;
-  transition: opacity 0.25s ease;
+/* Шари для кросфейду: завантаження зникає, контент з'являється */
+.layer {
+  transition: opacity 0.3s ease;
 }
 
-.contentWrap.contentVisible {
+.loadingLayer {
+  opacity: 1;
+}
+
+.loadingLayer.layerFadeOut {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.contentLayer {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  top: 24px;
+  bottom: 24px;
+  opacity: 0;
+}
+
+.contentLayer.layerVisible {
   opacity: 1;
 }
 

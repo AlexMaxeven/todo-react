@@ -48,23 +48,26 @@ const TaskPage = (props) => {
         hasError && styles.wrapperError,
     ].filter(Boolean).join(' ');
 
+    const showLoadingLayer = isLoading || task;
+    const showContentLayer = task && !hasError;
+
     return (
         <div className={wrapperClass} style={blockStyle}>
-            {isLoading && (
-                <>
-                    <RouterLink to="/" className={styles.backLink}>Назад до списку</RouterLink>
-                    <p className={styles.placeholder}>Завантаження...</p>
-                </>
-            )}
             {hasError && (
                 <>
                     <RouterLink to="/" className={styles.backLink}>Назад до списку</RouterLink>
                     <p className={styles.placeholder}>Задачу не знайдено</p>
                 </>
             )}
-            {!isLoading && !hasError && task && (
+            {showLoadingLayer && !hasError && (
+                <div className={`${styles.layer} ${styles.loadingLayer} ${task ? styles.layerFadeOut : ''}`}>
+                    <RouterLink to="/" className={styles.backLink}>Назад до списку</RouterLink>
+                    <p className={styles.placeholder}>Завантаження...</p>
+                </div>
+            )}
+            {showContentLayer && (
                 <div
-                    className={`${styles.contentWrap} ${contentVisible ? styles.contentVisible : ''}`}
+                    className={`${styles.layer} ${styles.contentLayer} ${contentVisible ? styles.layerVisible : ''}`}
                 >
                     <RouterLink to="/" className={styles.backLink}>
                         Назад до списку
