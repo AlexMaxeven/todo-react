@@ -56,24 +56,24 @@ const TaskPage = (props) => {
     return (
         <div className={wrapperClass} style={blockStyle}>
             {isLoading && (
-                <RouterLink to="/" className={styles.backLink}>Назад до списку</RouterLink>
+                <RouterLink to="/" className={styles.backLink}>Back to list</RouterLink>
             )}
             {hasError && (
                 <>
-                    <RouterLink to="/" className={styles.backLink}>Назад до списку</RouterLink>
-                    <p className={styles.placeholder}>Задачу не знайдено</p>
+                    <RouterLink to="/" className={styles.backLink}>Back to list</RouterLink>
+                    <p className={styles.placeholder}>Task not found</p>
                 </>
             )}
             {!isLoading && !hasError && task && (
                 <>
                     <RouterLink to="/" className={styles.backLink}>
-                        Назад до списку
+                        Back to list
                     </RouterLink>
                     <h1 className={styles.title}>{task.title}</h1>
                     <div className={styles.statusRow}>
-                        <span className={styles.statusLabel}>Статус:</span>
+                        <span className={styles.statusLabel}>Status:</span>
                         <span className={task.isDone ? styles.statusDone : styles.statusNotDone}>
-                            {task.isDone ? 'Виконано' : 'Не виконано'}
+                            {task.isDone ? 'Done' : 'Not done'}
                         </span>
                     </div>
                 </>
