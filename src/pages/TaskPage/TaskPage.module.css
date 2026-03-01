@@ -1,4 +1,5 @@
-.page {
+/* Один контейнер для всіх станів — без стрибків розміру */
+.wrapper {
   width: 100%;
   min-width: 404px;
   max-width: 404px;
@@ -6,6 +7,27 @@
   padding: 24px;
   background-color: var(--color-white);
   border-radius: var(--border-radius);
+}
+
+.wrapperError {
+  color: var(--color-dark-2);
+}
+
+/* Плавна поява контенту задачі */
+.contentWrap {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.contentWrap.contentVisible {
+  opacity: 1;
+}
+
+.placeholder {
+  margin: 0;
+  color: var(--color-gray-4);
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 .backLink {
@@ -72,24 +94,3 @@
   color: var(--color-gray-4);
 }
 
-.loading,
-.error {
-  width: 100%;
-  min-width: 404px;
-  max-width: 404px;
-  min-height: 429px;
-  padding: 24px;
-  background-color: var(--color-white);
-  border-radius: var(--border-radius);
-  text-align: left;
-  color: var(--color-gray-4);
-}
-
-.loading p,
-.error p {
-  margin: 0;
-}
-
-.error {
-  color: var(--color-dark-2);
-}
