@@ -16,7 +16,7 @@ const TaskPage = (props) => {
     const [task, setTask] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
-    const [contentVisible, setContentVisible] = useState(false);
+    const [pageRevealed, setPageRevealed] = useState(false);
 
     useEffect(() => {
         tasksAPI.getById(taskId)
@@ -32,43 +32,40 @@ const TaskPage = (props) => {
             });
     }, [taskId]);
 
-    // Плавна поява контенту після завантаження задачі
+    // Сторінка одразу opacity 0, після першого рендеру — анімація до 100% за 2 с
     useEffect(() => {
-        if (isLoading || hasError || !task) return;
-        const id = requestAnimationFrame(() => {
+        let cancelled = false;
+        requestAnimationFrame(() => {
+            if (cancelled) return;
             requestAnimationFrame(() => {
-                setContentVisible(true);
+                if (cancelled) return;
+                setTimeout(() => {
+                    if (!cancelled) setPageRevealed(true);
+                }, 0);
             });
         });
-        return () => cancelAnimationFrame(id);
-    }, [isLoading, hasError, task]);
+        return () => { cancelled = true; };
+    }, []);
 
     const wrapperClass = [
         styles.wrapper,
         hasError && styles.wrapperError,
+        pageRevealed && styles.wrapperRevealed,
     ].filter(Boolean).join(' ');
-
-    const showLoadingLayer = isLoading || task;
-    const showContentLayer = task && !hasError;
 
     return (
         <div className={wrapperClass} style={blockStyle}>
+            {isLoading && (
+                <RouterLink to="/" className={styles.backLink}>Назад до списку</RouterLink>
+            )}
             {hasError && (
                 <>
                     <RouterLink to="/" className={styles.backLink}>Назад до списку</RouterLink>
                     <p className={styles.placeholder}>Задачу не знайдено</p>
                 </>
             )}
-            {showLoadingLayer && !hasError && (
-                <div className={`${styles.layer} ${styles.loadingLayer} ${task ? styles.layerFadeOut : ''}`}>
-                    <RouterLink to="/" className={styles.backLink}>Назад до списку</RouterLink>
-                    <p className={styles.placeholder}>Завантаження...</p>
-                </div>
-            )}
-            {showContentLayer && (
-                <div
-                    className={`${styles.layer} ${styles.contentLayer} ${contentVisible ? styles.layerVisible : ''}`}
-                >
+            {!isLoading && !hasError && task && (
+                <>
                     <RouterLink to="/" className={styles.backLink}>
                         Назад до списку
                     </RouterLink>
@@ -79,7 +76,7 @@ const TaskPage = (props) => {
                             {task.isDone ? 'Виконано' : 'Не виконано'}
                         </span>
                     </div>
-                </div>
+                </>
             )}
         </div>
     );

@@ -1,3 +1,4 @@
+/* При переході на головну одразу opacity 0, потім за 2 с до 100% */
 .todo {
   display: flex;
   flex-direction: column;
@@ -9,17 +10,17 @@
   padding: 24px;
   background-color: var(--color-white);
   border-radius: var(--border-radius);
-  transition: opacity 0.25s ease;
   opacity: 0;
+  transition: opacity 2s ease;
 }
 
 .todo.isReady {
   opacity: 1;
-  transition: opacity 0.2s ease;
 }
 
 .todo.isExiting {
   opacity: 0;
+  transition: opacity 0.25s ease;
 }
 
 .title {

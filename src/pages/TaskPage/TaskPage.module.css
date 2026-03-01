@@ -1,6 +1,5 @@
-/* Один контейнер для всіх станів — без стрибків розміру */
+/* Сторінка при переході одразу opacity 0, потім анімація до 100% за 2 с */
 .wrapper {
-  position: relative;
   width: 100%;
   min-width: 404px;
   max-width: 404px;
@@ -8,37 +7,16 @@
   padding: 24px;
   background-color: var(--color-white);
   border-radius: var(--border-radius);
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+
+.wrapper.wrapperRevealed {
+  opacity: 1;
 }
 
 .wrapperError {
   color: var(--color-dark-2);
-}
-
-/* Шари для кросфейду: завантаження зникає, контент з'являється */
-.layer {
-  transition: opacity 0.3s ease;
-}
-
-.loadingLayer {
-  opacity: 1;
-}
-
-.loadingLayer.layerFadeOut {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.contentLayer {
-  position: absolute;
-  left: 24px;
-  right: 24px;
-  top: 24px;
-  bottom: 24px;
-  opacity: 0;
-}
-
-.contentLayer.layerVisible {
-  opacity: 1;
 }
 
 .placeholder {
