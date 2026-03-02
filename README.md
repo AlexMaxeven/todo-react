@@ -1,12 +1,81 @@
-# React + Vite
+# Todo — React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Todo-додаток на React та Vite: список задач, сторінка задачі, пошук та деплой на GitHub Pages.
 
-Currently, two official plugins are available:
+## Що є в проєкті
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Головна** — список задач (додавання, видалення, позначка «виконано»), пошук, кнопка «Show first incomplete task».
+- **Сторінка задачі** (`/tasks/:id`) — заголовок, статус, посилання «Back to list».
+- Маршрутизація через кастомний Router (підтримка `BASE_URL` для GitHub Pages).
+- Дані: `localStorage` або json-server (перемикач через `VITE_STATIC_BACKEND` у `.env.production`).
 
-## Expanding the ESLint configuration
+## Роути
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+| Шлях        | Сторінка   | Опис              |
+|------------|------------|-------------------|
+| `/`        | TasksPage  | Головна, список   |
+| `/tasks/:id` | TaskPage | Сторінка однієї задачі |
+| `*`        | 404        | Not found         |
+
+Роути задані в `src/app/App.jsx`, матчинг і параметри — у `src/app/routing/Router.jsx` (`matchPath`, `getCurrentPath`).
+
+## Хуки та де використовуються
+
+**Роутинг**
+
+- `useRoute` — `src/app/routing/Router.jsx`. Повертає поточний path, підписаний на `popstate`.
+
+**Задачі (entities/todo)**
+
+- `useTasks` — `src/entities/todo/model/useTasks.js`. Стан списку задач: `useReducer(tasksReducer)`, пошук, додавання/видалення/toggle, вихід на сторінку задачі (`isExitingToTask`). Використовується в `TaskContext`.
+- `useInCompleteTaskScroll` — `src/entities/todo/model/useInCompleteTaskScroll.js`. `useRef` на першу невиконану задачу для scroll. Результат у `TaskContext` як `firstIncompleteTaskRef`.
+- `useTaskLocalStorage` — `src/entities/todo/model/useTaskLocalStorage.js`. Збереження/завантаження задач у localStorage (у поточному коді не підключено).
+
+**Контекст**
+
+- `TaskContext` — `src/entities/todo/model/TaskContext.jsx`. Об’єднує `useTasks` і `useInCompleteTaskScroll`, через `useMemo` віддає значення контексту. Контекст використовується в: `Todo`, `AddTaskForm`, `SearchTaskForm`, `TodoInfo`, `TodoList`, `TodoItem`.
+
+**Сторінки**
+
+- **TaskPage** (`src/pages/TaskPage/TaskPage.jsx`): `useState` (task, isLoading, hasError, pageRevealed), `useEffect` (завантаження задачі по id, запуск показу сторінки).
+- **Todo** (`src/widgets/Todo/Todo.jsx`): `useContext(TaskContext)`, `useState(isReady)`, `useEffect` (два rAF для isReady).
+
+**Фічі**
+
+- **AddTaskForm**: `useContext(TaskContext)`, `useState` (newTaskTitle, error).
+- **SearchTaskForm**: `useContext(TaskContext)` (searchQuery, setSearchQuery).
+- **TodoInfo**: `useContext(TaskContext)`, `useMemo` для підрахунку виконаних.
+
+**Спільні**
+
+- `useCombinedRefs` — `src/shared/hooks/useCombinedRefs.js`. Об’єднує кілька ref у один callback ref.
+
+**Оптимізація**
+
+- `memo` — у `TodoItem`, `TodoList`, `TodoInfo`.
+
+## Стек
+
+- React  
+- Vite  
+- CSS Modules  
+
+## Збірка та запуск
+
+```bash
+npm install
+npm run dev
+```
+
+Збірка для продакшену (наприклад, для GitHub Pages з base `/todo-react/`):
+
+```bash
+npm run build
+```
+
+Перегляд збірки локально (base `/`):
+
+```bash
+npm run build:preview
+npm run preview
+```
